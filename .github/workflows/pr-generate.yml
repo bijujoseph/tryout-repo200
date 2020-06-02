@@ -1,0 +1,21 @@
+name: Tryout Repo 200 Lib Update
+
+on:
+  registry_package:
+    types: [published]
+
+jobs:
+
+  build:
+    name: Initialize and Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Git checkout
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Create coverage folder
+        run: mkdir -p coverage
+      - name: Install Dependencies
+        run: npm install
