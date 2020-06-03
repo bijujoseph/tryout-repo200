@@ -1,0 +1,13 @@
+name: Tryout Repo 200 Lib Receive
+
+on:
+  repository_dispatch:
+    types: [lib-update-event]
+
+jobs:
+  libUpdateEvent:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Git checkout
+      - run: echo ${{ github.event.client_payload }}
