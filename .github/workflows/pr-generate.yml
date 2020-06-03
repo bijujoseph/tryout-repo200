@@ -7,7 +7,7 @@ on:
 jobs:
 
   build:
-    name: Initialize and Build
+    name: Debug Action Print
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,7 +15,5 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - name: Create coverage folder
-        run: mkdir -p coverage
-      - name: Install Dependencies
-        run: npm install
+      - name: Debug Action
+        uses: hmarr/debug-action@v1.0.0
