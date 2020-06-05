@@ -24,7 +24,14 @@ jobs:
             console.log("data - data : ", JSON.stringify(context));
             let payload = context.payload.client_payload;
             let revision = payload.tag_name.replace('v', '');
-            return payload.public_package + '@' + revision;
+            let packageName = payload.public_package + '@' + revision;
+            console.log("packageName", packageName);
+            return packageName;
+
+      - name: Print new Package Name
+        env:
+          NEW_PKG = ${{steps.lib.outputs.result}}
+        run: echo "NEW_PKG"
 
       - name: Update Dependency
         run: npm install ${{steps.lib.outputs.result}} --save --save-exact
