@@ -22,9 +22,9 @@ jobs:
           result-encoding: string
           script: |
             console.log("data - data : ", JSON.stringify(context));
-            let payload = context.github.event.client_payload;
-            let revision = payload.tag_name.replace('v', '@');
-            return payload.public_package + revision;
+            let payload = context.payload.client_payload;
+            let revision = payload.tag_name.replace('v', '');
+            return payload.public_package + '@' + revision;
 
       - name: Update Dependency
         run: npm install ${{steps.lib.outputs.result}} --save --save-exact
