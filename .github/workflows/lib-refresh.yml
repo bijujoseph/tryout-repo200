@@ -22,10 +22,11 @@ jobs:
           result-encoding: string
           script: |
             console.log("data - data : ", JSON.stringify(context));
-            let payload = context.payload.client_payload;
-            let revision = payload.tag_name.replace('v', '');
-            let packageName = payload.public_package + '@' + revision;
-            console.log("packageName", packageName);
+            let clientPayload = context.payload.client_payload;
+            let publicPackageName = clientPayload.public_package;
+            let revision = clientPayload.tag_name.replace('v', '');
+            let packageName = publicPackageName + '@' + revision;
+            console.log("packageName", packageName, "publicPackageName", publicPackageName, "revision" , revision);
             return packageName;
 
       - name: Print new Package Name
