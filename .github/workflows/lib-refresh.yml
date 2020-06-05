@@ -20,7 +20,7 @@ jobs:
         uses: actions/github-script@v2.0.0
         with:
           result-encoding: string
-          script:|
+          script: |
             console.log("data - data : ", JSON.stringify(context));
             let payload = context.github.event.client_payload;
             let revision = payload.tag_name.replace('v', '@');
@@ -35,6 +35,6 @@ jobs:
         with:
           commit-message: Update dependency to ${{ steps.lib.outputs.result }}
           title: Update library -  ${{steps.lib.outputs.result}}
-          body:|
+          body: |
             Auto generated pull request for upgrading to ${{steps.lib.outputs.result}}.
             For details vist: {{context.github.event.client_payload.html_url}}
