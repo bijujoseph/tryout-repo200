@@ -12,27 +12,22 @@ jobs:
       - name: Checkout Codebase
         uses: actions/checkout@v2
 
-      - name: Debug Action
-        uses: hmarr/debug-action@v1.0.0
-
       - name: Extract Dependency Name
         id: lib
         uses: actions/github-script@v2.0.0
         with:
           result-encoding: string
           script: |
-            console.log("data - data : ", JSON.stringify(context));
             let clientPayload = context.payload.client_payload;
             let publicPackageName = clientPayload.public_package;
             let revision = clientPayload.tag_name.replace('v', '');
             let packageName = publicPackageName + '@' + revision;
-            console.log("packageName", packageName, "publicPackageName", publicPackageName, "revision" , revision);
             return packageName;
 
       - name: Print new Package Name
         env:
-          NEW_PKG = ${{steps.lib.outputs.result}}
-        run: echo "NEW_PKG"
+          NEW_PKG: ${{steps.lib.outputs.result}}
+        run: echo "$NEW_PKG"
 
       - name: Update Dependency
         run: npm install ${{steps.lib.outputs.result}} --save --save-exact
