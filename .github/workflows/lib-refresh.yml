@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      - name: Debug Action
+        uses: hmarr/debug-action@v1.0.0
+
       - name: Checkout Codebase
         uses: actions/checkout@v2
 
@@ -36,8 +39,12 @@ jobs:
         id: pr
         uses: peter-evans/create-pull-request@v2
         with:
-          commit-message: Update dependency to ${{ steps.lib.outputs.result }}
+          token: ${{ secrets.MY_GITHUB_TOKEN }}
+          commit-message: Updating dependency ${{ steps.lib.outputs.result }}
           title: Update library -  ${{steps.lib.outputs.result}}
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          branch: update_${{github.event.client_payload.public_package}}_${{github.event.client_payload.tag_name}}
           body: |
             Auto generated pull request for upgrading to ${{steps.lib.outputs.result}}.
-            For details vist: {{context.github.event.client_payload.html_url}}
+            For details vist: {{github.event.client_payload.html_url}}
