@@ -1,0 +1,24 @@
+name: PR Title Linter
+on:
+  pull_request:
+    types: [ opened, reopned, edited ]
+    branches: [ master, main ]
+
+jobs:
+  
+  lint:
+    if: ${{ !startsWith(github.head_ref, 'snyk-') 
+        && !startsWith(github.head_ref, 'release/')
+        && !startsWith(github.head_ref, 'hotfix/')
+        && !startsWith(github.head_ref, 'dependabot/') }} 
+        
+    runs-on: ubuntu-latest
+    
+    steps:
+        
+    - name: Ensure JIRA ticket in title
+      uses: seferov/pr-lint-action@master
+      with:
+        title-regex: '^QPPC-?\s?\d*'
+        title-regex-flags: 'gi'
+        error-message: 'Add Jira ID to your PR title'
